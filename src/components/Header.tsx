@@ -1,5 +1,6 @@
-import { SignInButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
+import Logo from "./Logo";
 
 
 const Header = async () => {
@@ -8,11 +9,19 @@ const Header = async () => {
   return (
     <nav className="flex h-20 items-center justify-between border-b shadow-md px-10">
       <Link href="/">
+      <Logo />
       </Link>
       <div className="flex items-center gap-3">
-            <Link href="/create-recipe">Create Recipe</Link>
-            <Link href={"/dashboard"}>Dashboard</Link>
-          <SignInButton mode="modal"/>
+            
+          <SignedOut>
+          <SignInButton mode="modal" />
+          <SignUpButton mode="modal" />
+          </SignedOut>
+          <SignedIn>
+          <Link href="/create-recipe">Create Recipe</Link>
+          <Link href={"/dashboard"}>Dashboard</Link>
+            <UserButton />
+          </SignedIn>
         
       </div>
     </nav>
