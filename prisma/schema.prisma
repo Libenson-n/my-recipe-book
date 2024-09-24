@@ -11,11 +11,42 @@ datasource db {
     relationMode = "prisma"
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model User {
+    id          String    @id @default(uuid())
+    clerkUserId String    @unique
+    userName    String
+    email       String    @unique
+    imageUrl    String?
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
+    comments    Comment[]
+    recipes     Recipe[]
+}
 
-    @@index([name])
+model Recipe {
+    id           String    @id @default(uuid())
+    title        String
+    description  String
+    ingredients  String[]
+    instructions String[]
+    imageUrl     String
+    // Relation to user
+    userId       String
+    user         User      @relation(fields: [userId], references: [id])
+    createdAt    DateTime  @default(now())
+    // Relation to comment
+    comments     Comment[]
+
+    @@index([userId])
+}
+
+model Comment {
+    id        String   @id @default(uuid())
+    userId    String
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    createdAt DateTime @default(now())
+    recipeId  String
+    recipe    Recipe   @relation(fields: [recipeId], references: [id])
+
+    @@index([userId])
 }

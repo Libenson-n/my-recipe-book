@@ -1,13 +1,19 @@
-import {SignInButton} from "@clerk/nextjs"
 
-export default async function Home() {
+
+const Home = async () => {
+
+
+
+
 
 
   return (
     <main className="">
       <div className="">
-        <SignInButton />
+        
       </div>
     </main>
   );
 }
+
+export default Home
