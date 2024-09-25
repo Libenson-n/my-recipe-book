@@ -8,9 +8,6 @@ const Header = async () => {
 
   const user = await checkUser()
 
-  console.log(user)
-  
-
   return (
     <nav className="flex h-20 items-center justify-between border-b shadow-md px-10">
       <Link href="/">
