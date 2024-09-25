@@ -1,6 +1,5 @@
-import {recipes} from "@/lib/data"
-import { db } from "@/server/db";
 import Hero from "./_components/Hero";
+import RecipeList from "./_components/RecipeList";
 
 const Home = async () => {
 
@@ -8,6 +7,7 @@ const Home = async () => {
   return (
     <main className="">
       <Hero />
+      <RecipeList />
     </main>
   );
 }
