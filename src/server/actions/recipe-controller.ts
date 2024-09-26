@@ -26,6 +26,25 @@ export const getRecipes = async () => {
     data?: Recipe;
     error?: string;
   };
+
+  export const getRecipe = async (id: string) => {
+    try {
+      const recipe = await db.recipe.findUnique({
+        where:{
+          id: id
+        }
+      })
+      if (!recipe) {
+        return {error: "Recipe not found!"}
+      }
+
+      return recipe
+
+    } catch (error) {
+      console.log(error)
+      return {error: "Failed to fetch recipe!"}
+    }
+  }
   
   export const addRecipe = async (
     recipe: AddRecipeData

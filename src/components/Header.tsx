@@ -20,7 +20,7 @@ const Header = async () => {
           <SignUpButton mode="modal" />
           </SignedOut>
           <SignedIn>
-          <Link href="/create-recipe">Create Recipe</Link>
+          <Link href="/pages/create-recipe">Create Recipe</Link>
           <Link href={"/dashboard"}>Dashboard</Link>
             <UserButton />
           </SignedIn>
