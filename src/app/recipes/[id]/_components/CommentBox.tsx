@@ -12,6 +12,7 @@ type CommentBoxProps = {
 
 const CommentBox = ({recipeId, userId}: CommentBoxProps) => {
     const handleSubmit = (formData: FormData) => {
+      const content = formData.get("content")
         addComment(recipeId, userId, formData)
       }
 
