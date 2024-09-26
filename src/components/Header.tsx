@@ -9,7 +9,7 @@ const Header = async () => {
   const user = await checkUser()
 
   return (
-    <nav className="flex h-20 items-center justify-between border-b shadow-md px-10">
+    <nav className="flex h-20 items-center justify-between border-b shadow-b-md px-10">
       <Link href="/">
       <Logo />
       </Link>
