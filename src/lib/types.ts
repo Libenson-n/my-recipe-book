@@ -7,7 +7,7 @@ export type User = {
     createdAt: Date;
   };
 
-  export type Recipe = {
+export type Recipe = {
     id: string;
     title: string;
     description: string;
@@ -17,4 +17,10 @@ export type User = {
     userId: string;
     comments?: string[];
   };
-  
+ 
+export type Comment = {
+  id: string;
+  content: string;
+  userId: string;
+  recipeId: string;
+}

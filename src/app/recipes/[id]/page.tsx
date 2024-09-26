@@ -2,7 +2,12 @@ import { db } from '@/server/db';
 import { Recipe } from '@/lib/types'; 
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
+import { addComment } from '@/server/actions/comment-controller';
+import CommentBox from './_components/CommentBox';
+import { checkUser } from '@/lib/checkUser';
 
 type RecipePageProps = {
   params: {
@@ -12,6 +17,8 @@ type RecipePageProps = {
 
 const RecipePage = async ({ params }: RecipePageProps) => {
   const { id } = params;
+  const user = await checkUser()
+    const userId = user?.id
 
   // Fetch recipe based on ID
   const recipe = await db.recipe.findUnique({
@@ -21,7 +28,7 @@ const RecipePage = async ({ params }: RecipePageProps) => {
   // Handle case where recipe is not found
   if (!recipe) {
     notFound(); // This will trigger a 404 page
-  }
+  }  
 
   return (
     <main className="">
@@ -45,8 +52,8 @@ const RecipePage = async ({ params }: RecipePageProps) => {
           </li>
         ))}
       </ul>
-      <Link href="/recipes">Back to recipes</Link>
-    </Card>
+    </Card> 
+    {userId && <CommentBox recipeId={id} userId={userId} /> }
     </main>
   );
 };
