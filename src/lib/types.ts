@@ -22,5 +22,6 @@ export type Comment = {
   id: string;
   content: string;
   userId: string;
+  userName: string;
   recipeId: string;
 }

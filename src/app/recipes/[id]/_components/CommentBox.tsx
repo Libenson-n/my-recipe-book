@@ -3,17 +3,19 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Textarea } from '@/components/ui/textarea'
+import { User } from '@/lib/types'
 import { addComment } from '@/server/actions/comment-controller'
 
 type CommentBoxProps = {
     recipeId: string
-    userId: string
+    user: {id: string, userName: string}
 }
 
-const CommentBox = ({recipeId, userId}: CommentBoxProps) => {
+const CommentBox = ({recipeId, user}: CommentBoxProps) => {
+
     const handleSubmit = (formData: FormData) => {
-      const content = formData.get("content")
-        addComment(recipeId, userId, formData)
+      
+        addComment(recipeId, user, formData)
       }
 
   return (

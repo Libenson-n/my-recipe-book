@@ -44,6 +44,7 @@ model Comment {
     id        String   @id @default(uuid())
     content   String
     userId    String
+    userName String
     user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     createdAt DateTime @default(now())
     recipeId  String

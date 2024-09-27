@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { addComment } from '@/server/actions/comment-controller';
 import CommentBox from './_components/CommentBox';
 import { checkUser } from '@/lib/checkUser';
+import CommentSection from './_components/CommentSection';
 
 type RecipePageProps = {
   params: {
@@ -18,7 +19,7 @@ type RecipePageProps = {
 const RecipePage = async ({ params }: RecipePageProps) => {
   const { id } = params;
   const user = await checkUser()
-    const userId = user?.id
+  
 
   // Fetch recipe based on ID
   const recipe = await db.recipe.findUnique({
@@ -39,6 +40,7 @@ const RecipePage = async ({ params }: RecipePageProps) => {
       </CardHeader>
       <img src={recipe.imageUrl} alt={recipe.title} />
       <ul className='p-6 border-b'>
+        <h3 className='text-xl font-semibold'>What you will need</h3>
         {recipe.ingredients.map((ingredient, index) => (
           <li key={index}>
             {ingredient}
@@ -46,6 +48,7 @@ const RecipePage = async ({ params }: RecipePageProps) => {
         ))}
       </ul>
       <ul className='p-6 border-b'>
+        <h3 className='text-xl font-semibold'>How to make it</h3>
         {recipe.instructions.map((instruction, index) => (
           <li key={index}>
             {index + 1}. {instruction}
@@ -53,7 +56,8 @@ const RecipePage = async ({ params }: RecipePageProps) => {
         ))}
       </ul>
     </Card> 
-    {userId && <CommentBox recipeId={id} userId={userId} /> }
+    {user && <CommentBox recipeId={id} user={user} /> }
+    <CommentSection recipeId={id} />
     </main>
   );
 };
