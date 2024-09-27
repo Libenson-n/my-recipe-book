@@ -13,6 +13,16 @@ export const getRecipes = async () => {
   }
 };
 
+export const getRecipesByUserId = async (userId: string) => {
+  try {
+    const recipes = await db.recipe.findMany();
+    const userRecipes = recipes.filter((recipe) => recipe.userId === userId);
+    return userRecipes;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 type AddRecipeData = {
   userId: string;
   title: string;

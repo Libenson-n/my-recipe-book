@@ -43,3 +43,16 @@ export const getComments = async (recipeId: string) => {
     console.log("Failed to get comments!", error);
   }
 };
+
+export const getCommentsByUserId = async (userId: string) => {
+  try {
+    const userComments = await db.comment.findMany({
+      where: {
+        userId: userId,
+      },
+    });
+    return userComments;
+  } catch (error) {
+    console.log(error);
+  }
+};

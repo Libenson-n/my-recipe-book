@@ -1,6 +1,5 @@
 "use server";
 
-import { recipes } from "@/lib/data";
 import { db } from "@/server/db";
 import { currentUser } from "@clerk/nextjs/server";
 
@@ -48,5 +47,18 @@ export const saveRecipe = async (recipeId: string, userId: string) => {
     console.log("Recipe saved successfully");
   } catch (error) {
     console.error("Error saving recipe:", error);
+  }
+};
+
+export const getSavedRecipes = async (savedRecipes: string[]) => {
+  try {
+    const allRecipes = await db.recipe.findMany();
+    const userSavedRecipes = allRecipes.filter((recipe) =>
+      savedRecipes.includes(recipe.id),
+    );
+    return userSavedRecipes;
+  } catch (error) {
+    console.error("Error fetching recipes:", error);
+    return { recipes: [] }; // Return an empty array on error
   }
 };
