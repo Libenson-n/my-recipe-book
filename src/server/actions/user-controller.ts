@@ -2,6 +2,7 @@
 
 import { db } from "@/server/db";
 import { currentUser } from "@clerk/nextjs/server";
+import { revalidatePath } from "next/cache";
 
 export const getUserIdWithClerkId = async () => {
   const clerkUser = await currentUser();
@@ -32,19 +33,33 @@ export const saveRecipe = async (recipeId: string, userId: string) => {
   try {
     const existingRecipes = await getUserRecipes(userId);
 
-    // Create a new array with the recipeId added, ensuring no duplicates
-    const updatedRecipes = [...new Set([...existingRecipes, recipeId])];
-
-    await db.user.update({
-      where: { id: userId },
-      data: {
-        savedRecipes: {
-          set: updatedRecipes,
+    if (existingRecipes.includes(recipeId)) {
+      const removeRecipe = existingRecipes.filter(
+        (recipe) => recipe !== recipeId,
+      );
+      await db.user.update({
+        where: { id: userId },
+        data: {
+          savedRecipes: {
+            set: removeRecipe,
+          },
         },
-      },
-    });
+      });
+    } else {
+      // Create a new array with the recipeId added, ensuring no duplicates
+      const updatedRecipes = [...new Set([...existingRecipes, recipeId])];
 
-    console.log("Recipe saved successfully");
+      await db.user.update({
+        where: { id: userId },
+        data: {
+          savedRecipes: {
+            set: updatedRecipes,
+          },
+        },
+      });
+      revalidatePath("/");
+      console.log("Recipe saved successfully");
+    }
   } catch (error) {
     console.error("Error saving recipe:", error);
   }

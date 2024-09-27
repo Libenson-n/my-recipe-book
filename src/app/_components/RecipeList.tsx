@@ -15,7 +15,6 @@ import { getUserIdWithClerkId } from "@/server/actions/user-controller";
 const RecipeList = async () => {
   const { recipes } = await getRecipes();
   const user = await getUserIdWithClerkId();
-  const userId = user?.id;
 
   if (!recipes || recipes.length === 0) {
     return <p>No recipes available.</p>;
@@ -40,7 +39,7 @@ const RecipeList = async () => {
               />
             </CardContent>
           </Link>
-          {userId && <SaveButton recipeId={recipe.id} userId={userId} />}
+          {user && <SaveButton recipeId={recipe.id} user={user} />}
         </Card>
       ))}
     </div>
