@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { addComment } from "@/server/actions/comment-controller";
+import { useRef } from "react";
 
 type CommentBoxProps = {
   recipeId: string;
@@ -17,8 +18,11 @@ type CommentBoxProps = {
 };
 
 const CommentBox = ({ recipeId, user }: CommentBoxProps) => {
+  const ref = useRef<HTMLFormElement>(null);
+
   const handleSubmit = (formData: FormData) => {
     addComment(recipeId, user, formData);
+    ref.current?.reset();
   };
 
   return (
@@ -26,12 +30,12 @@ const CommentBox = ({ recipeId, user }: CommentBoxProps) => {
       <CardHeader>
         <CardTitle>Leave a comment</CardTitle>
       </CardHeader>
-      <form action={handleSubmit}>
+      <form ref={ref} action={handleSubmit}>
         <CardContent>
           <Textarea rows={6} name="content" />
         </CardContent>
         <CardFooter>
-          <Button>Submit</Button>
+          <Button type="submit">Submit</Button>
         </CardFooter>
       </form>
     </Card>

@@ -26,7 +26,7 @@ const RecipeList = async () => {
       {recipes.map((recipe: Recipe) => (
         <Card className="min-h-[420px] p-0">
           <Link href={`/recipes/${recipe.id}`} key={recipe.id}>
-            <CardHeader>
+            <CardHeader className="h-[8rem]">
               <CardTitle>{recipe.title}</CardTitle>
               <CardDescription>{recipe.description}</CardDescription>
             </CardHeader>

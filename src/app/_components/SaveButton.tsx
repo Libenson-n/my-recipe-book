@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { saveRecipe } from "@/server/actions/user-controller";
+import { Bookmark } from "lucide-react";
 
 type SaveButtonProps = {
   recipeId: string;
@@ -14,10 +15,11 @@ const SaveButton = ({ recipeId, userId }: SaveButtonProps) => {
   };
   return (
     <Button
-      className="mt-2 w-full bg-indigo-600 hover:bg-indigo-800"
+      variant={"ghost"}
+      className="mt-2 w-full"
       onClick={handleSaveRecipe}
     >
-      Save
+      Add to your cookbook <Bookmark className="text-pink-600" />
     </Button>
   );
 };

@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { db } from "../db";
 
 export const addComment = async (
@@ -24,6 +25,7 @@ export const addComment = async (
         recipeId,
       },
     });
+    revalidatePath(`/reciped/${recipeId}`);
     return { data: newComment };
   } catch (error) {
     return { error: "Failed to add comment!" };
@@ -52,6 +54,21 @@ export const getCommentsByUserId = async (userId: string) => {
       },
     });
     return userComments;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteComment = async (commentId: string, recipedId: string) => {
+  try {
+    const res = await db.comment.delete({
+      where: {
+        id: commentId,
+      },
+    });
+
+    revalidatePath(`/recipes/${recipedId}`);
+    return { message: "Comment successfully deleted!" };
   } catch (error) {
     console.log(error);
   }
